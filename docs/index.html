@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpriteSheetGen MCP Server and CLI: AI sprite sheets for 2D games</title>
+<meta name="description" content="Docs for the SpriteSheetGen MCP server and CLI: let Claude Code, Codex or Cursor generate a 2D game character, animate it and export a sprite sheet, JSON atlas and Godot SpriteFrames into your project.">
+<link rel="canonical" href="https://terror668.github.io/spritesheetgen/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SpriteSheetGen MCP Server and CLI">
+<meta property="og:description" content="Generate a 2D game character, animate it and export engine-ready sprite sheets from your AI coding agent.">
+<meta property="og:url" content="https://terror668.github.io/spritesheetgen/">
+<meta property="og:image" content="https://terror668.github.io/spritesheetgen/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="dark">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SpriteSheetGen MCP server and CLI","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux (Node.js 20+)","url":"https://terror668.github.io/spritesheetgen/","downloadUrl":"https://www.npmjs.com/package/@spritesheetgen/cli","sameAs":["https://github.com/terror668/spritesheetgen","https://www.npmjs.com/package/@spritesheetgen/cli"],"publisher":{"@type":"Organization","name":"SpriteSheetGen","url":"https://spritesheetgen.com/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"The CLI and MCP server are free; generation uses credits"}}
+</script>
+<style>
+@font-face { font-family: "Pixelify Sans"; src: url("media/pixelify-sans-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+:root {
+  --bg: #1a1c2c; --panel: #232539; --line: #33364f; --text: #e8e9f3; --muted: #a3a6c2;
+  --marquee: #73eff7; --coin: #ffcd75; --red: #ef7d57;
+  --pixel: "Pixelify Sans", ui-monospace, monospace;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--marquee); text-underline-offset: 3px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--pixel); font-size: 20px; color: var(--text); text-decoration: none; }
+.brand img { width: 28px; height: 28px; }
+nav.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; }
+nav.links a { color: var(--muted); text-decoration: none; }
+nav.links a:hover { color: var(--text); }
+.hero { padding: 40px 0 24px; text-align: center; }
+.kicker { font-family: var(--pixel); color: var(--coin); letter-spacing: .04em; margin: 0 0 12px; }
+h1 { font-family: var(--pixel); font-weight: 500; font-size: clamp(30px, 6vw, 48px); line-height: 1.15; margin: 0 0 16px; }
+.lead { color: var(--muted); font-size: 18px; max-width: 680px; margin: 0 auto 28px; }
+.stage { display: flex; justify-content: center; align-items: flex-end; gap: clamp(4px, 2vw, 24px); flex-wrap: wrap; padding: 24px 8px 0; border-bottom: 2px dashed var(--line); margin: 0 auto 8px; max-width: 760px; }
+.stage img { height: clamp(72px, 21vw, 180px); width: auto; image-rendering: auto; }
+.caption { color: var(--muted); font-size: 13px; text-align: center; margin: 0 0 32px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.btn { display: inline-block; padding: 10px 18px; border: 2px solid var(--marquee); color: var(--bg); background: var(--marquee); font-weight: 600; text-decoration: none; border-radius: 4px; }
+.btn.ghost { background: transparent; color: var(--marquee); }
+section { padding: 36px 0; border-top: 1px solid var(--line); }
+h2 { font-family: var(--pixel); font-weight: 500; font-size: 26px; margin: 0 0 14px; }
+h3 { font-size: 17px; margin: 24px 0 8px; }
+p { margin: 0 0 14px; }
+.muted { color: var(--muted); }
+pre { position: relative; margin: 0 0 16px; padding: 14px 16px; background: #12131f; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; font: 14px/1.55 var(--mono); }
+code { font-family: var(--mono); font-size: .92em; }
+p code, td code, li code { background: #12131f; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+pre code { background: none !important; border: 0 !important; padding: 0 !important; }
+.steps pre { margin: 10px 0; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--mono); color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.tabs button { font: 14px system-ui, sans-serif; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--bg); background: var(--coin); border-color: var(--coin); }
+.panel[hidden] { display: none; }
+.table { overflow-x: auto; margin: 0 0 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--coin); font-weight: 600; white-space: nowrap; }
+td:first-child { white-space: nowrap; }
+.paid { color: var(--red); }
+.free { color: #a7f070; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.steps li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px 14px 56px; position: relative; }
+.steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 16px; top: 13px; font-family: var(--pixel); color: var(--coin); }
+.sheet { background: #12131f; border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; margin: 0 0 16px; }
+.sheet img { display: block; height: 140px; width: auto; max-width: none; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+@media (max-width: 600px) {
+  header.top { flex-direction: column; align-items: flex-start; }
+  .lead { font-size: 16px; }
+  .steps li { padding-left: 48px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://spritesheetgen.com/"><img src="favicon.svg" alt="SpriteSheetGen logo" width="28" height="28">SpriteSheetGen</a>
+    <nav class="links" aria-label="Docs">
+      <a href="#setup">Setup</a><a href="#tools">Tools</a><a href="#cli">CLI</a><a href="#export">Export files</a>
+      <a href="https://github.com/terror668/spritesheetgen">GitHub</a><a href="https://www.npmjs.com/package/@spritesheetgen/cli">npm</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <p class="kicker">MCP server + CLI</p>
+    <h1>AI sprite sheets for 2D games, from your coding agent</h1>
+    <p class="lead">Ask Claude Code, Codex or Cursor for a character and its moves. SpriteSheetGen generates them and drops a sprite sheet, a JSON atlas and a Godot <code>SpriteFrames</code> file into your project.</p>
+    <div class="stage">
+      <img src="media/knight-walk.webp" alt="Little knight walk cycle" width="149" height="200">
+      <img src="media/witch-walk.webp" alt="Little witch walk cycle" width="175" height="200">
+      <img src="media/dragon-walk.webp" alt="Baby dragon walk cycle" width="164" height="200">
+      <img src="media/mech-walk.webp" alt="Combat mech walk cycle" width="183" height="200">
+    </div>
+    <p class="caption">Walk cycles made with SpriteSheetGen (the knight's image is our logo art; only its animation is generated).</p>
+    <div class="cta">
+      <a class="btn" href="#setup">Set it up</a>
+      <a class="btn ghost" href="https://spritesheetgen.com/">Try it in the browser</a>
+    </div>
+  </div>
+
+  <section id="setup">
+    <h2>Setup</h2>
+    <ol class="steps">
+      <li><strong>Let your agent install it.</strong> Paste this into Claude Code, Codex or another agent with MCP:
+        <pre><code>Set up SpriteSheetGen for me: follow https://spritesheetgen.com/agents/install.txt</code></pre>
+        It adds the MCP server and an agent skill that knows the tools, budgets and engine imports.</li>
+      <li><strong>Create an API key</strong> on the <a href="https://spritesheetgen.com/account/">account page</a>. Each key has its own permissions and a daily and total credit cap; a new key cannot spend until you allow it.</li>
+      <li><strong>Log in from your own terminal</strong>, not the chat (the key is typed hidden):
+        <pre><code>npx -y @spritesheetgen/cli login</code></pre></li>
+    </ol>
+
+    <h3>Or add the MCP server by hand</h3>
+    <div class="tabs" role="tablist" aria-label="MCP client">
+      <button role="tab" aria-selected="true" aria-controls="t-claude" id="b-claude">Claude Code</button>
+      <button role="tab" aria-selected="false" aria-controls="t-codex" id="b-codex">Codex</button>
+      <button role="tab" aria-selected="false" aria-controls="t-json" id="b-json">Cursor, Claude Desktop, others</button>
+    </div>
+    <div class="panel" role="tabpanel" id="t-claude" aria-labelledby="b-claude"><pre><code>claude mcp add spritesheetgen -s user -- npx -y @spritesheetgen/cli mcp</code></pre></div>
+    <div class="panel" role="tabpanel" id="t-codex" aria-labelledby="b-codex" hidden><pre><code>codex mcp add spritesheetgen -- npx -y @spritesheetgen/cli mcp</code></pre></div>
+    <div class="panel" role="tabpanel" id="t-json" aria-labelledby="b-json" hidden><pre><code>{
+  "mcpServers": {
+    "spritesheetgen": {
+      "command": "npx",
+      "args": ["-y", "@spritesheetgen/cli", "mcp"]
+    }
+  }
+}</code></pre></div>
+    <p class="muted">Node.js 20 or newer. The server talks over stdio and reads the key saved by <code>login</code> (or <code>SPRITESHEETGEN_API_KEY</code>), so logging in later needs no restart.</p>
+  </section>
+
+  <section id="tools">
+    <h2>Tools</h2>
+    <div class="table"><table>
+      <thead><tr><th>Tool</th><th>Credits</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><code>estimate_sprite</code></td><td class="free">free</td><td>Price of a character or an action, your balance and the key's remaining budget</td></tr>
+        <tr><td><code>improve_prompt</code></td><td class="free">free</td><td>Turns a rough idea into a character description that generates well (small daily quota)</td></tr>
+        <tr><td><code>create_character</code></td><td class="paid">paid</td><td>One character image from a description</td></tr>
+        <tr><td><code>upload_character</code></td><td class="free">free</td><td>Uses your own PNG, JPEG or WebP character instead</td></tr>
+        <tr><td><code>animate_character</code></td><td class="paid">paid</td><td>One animation: <code>walk</code>, <code>run</code>, <code>idle</code>, <code>attack</code> or <code>jump</code></td></tr>
+        <tr><td><code>get_generation</code></td><td class="free">free</td><td>Status and result of a generation; can wait for it</td></tr>
+        <tr><td><code>list_characters</code></td><td class="free">free</td><td>Characters you generated or uploaded</td></tr>
+        <tr><td><code>list_actions</code></td><td class="free">free</td><td>Animations a character already has, so you never pay twice</td></tr>
+        <tr><td><code>export_sprite_sheet</code></td><td class="free">free</td><td>Packs a finished animation, or a local GIF, into a folder on your machine</td></tr>
+      </tbody>
+    </table></div>
+    <p>Your agent estimates first, shows you the price and spends only after you say yes. Every paid call carries a <code>max_credits</code> cap and a <code>client_key</code>, so a retried request is never charged twice. New accounts receive 25 credits; current prices are on the <a href="https://spritesheetgen.com/pricing/">pricing page</a>.</p>
+  </section>
+
+  <section id="cli">
+    <h2>CLI</h2>
+    <p>The same features without MCP, with <code>--json</code> output for scripts:</p>
+    <pre><code>spritesheetgen estimate --description "a small beetle knight" --json
+spritesheetgen character --description "a small beetle knight" --client-key my-key-0001 --max-credits 5 --json
+spritesheetgen animate --reference generation:CHARACTER_ID --action walk --client-key my-key-0002 --max-credits 10 --json
+spritesheetgen export --id ANIMATION_ID --out ./assets/beetle-walk --name walk --individual-frames --preview --json</code></pre>
+    <p>Packing a GIF you already have needs no key and costs nothing:</p>
+    <pre><code>npx -y @spritesheetgen/cli export --file ./walk.gif --out ./assets/walk --name hero_walk --preview</code></pre>
+  </section>
+
+  <section id="export">
+    <h2>What an export contains</h2>
+    <div class="sheet"><img src="https://raw.githubusercontent.com/terror668/spritesheetgen/main/samples/little-knight-walk/sheet.png" alt="Little knight walk sprite sheet: 12 frames in one row, transparent background" width="1260" height="140" loading="lazy"></div>
+    <p class="muted">The <a href="https://github.com/terror668/spritesheetgen/tree/main/samples/little-knight-walk">sample export</a>: the knight's walk on a green screen, packed by the CLI (background removed, edges cleaned, frames aligned).</p>
+    <div class="table"><table>
+      <thead><tr><th>File</th><th>Use it in</th></tr></thead>
+      <tbody>
+        <tr><td><code>sheet.png</code></td><td>Any engine: frames in a row or a grid, transparent background</td></tr>
+        <tr><td><code>sheet.json</code></td><td>Phaser, PixiJS and other engines that read TexturePacker JSON (hash), with an <code>animations</code> block</td></tr>
+        <tr><td><code>animation.tres</code></td><td>Godot 4: a <code>SpriteFrames</code> resource for <code>AnimatedSprite2D</code>, with speed and looping set</td></tr>
+        <tr><td><code>preview.gif</code></td><td>A quick look</td></tr>
+        <tr><td><code>export.json</code></td><td>The settings used, to repeat the export</td></tr>
+        <tr><td><code>frames/*.png</code></td><td>Unity, GameMaker or any tool that wants single images (<code>--individual-frames</code>)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Phaser 3</h3>
+    <pre><code>this.load.atlas("knight", "sheet.png", "sheet.json");
+this.anims.create({
+  key: "walk",
+  frames: this.anims.generateFrameNames("knight", { prefix: "knight_walk_", end: 11, zeroPad: 2 }),
+  frameRate: 14,
+  repeat: -1,
+});</code></pre>
+    <h3>Godot 4</h3>
+    <p>Put <code>sheet.png</code> and <code>animation.tres</code> in the same folder, add an <code>AnimatedSprite2D</code> and drag <code>animation.tres</code> onto its <strong>Sprite Frames</strong> property.</p>
+  </section>
+
+  <section>
+    <h2>No agent? Use the browser</h2>
+    <p>Everything above also works on <a href="https://spritesheetgen.com/">spritesheetgen.com</a>, plus free tools that run on your device: <a href="https://spritesheetgen.com/video-to-sprite-sheet/">video to sprite sheet</a>, <a href="https://spritesheetgen.com/gif-to-sprite-sheet/">GIF to sprite sheet</a>, <a href="https://spritesheetgen.com/sprite-sheet-maker/">sprite sheet maker</a>, <a href="https://spritesheetgen.com/sprite-sheet-cutter/">sprite sheet cutter</a> and <a href="https://spritesheetgen.com/sprite-sheet-to-gif/">sprite sheet to GIF</a>.</p>
+  </section>
+
+  <footer>
+    <p>SpriteSheetGen · <a href="https://spritesheetgen.com/">spritesheetgen.com</a> · <a href="https://github.com/terror668/spritesheetgen/issues">Issues</a> · <a href="mailto:support@spritesheetgen.com">support@spritesheetgen.com</a></p>
+    <p>This page is MIT licensed. Pixelify Sans is used under the <a href="media/pixelify-sans-OFL.txt">SIL Open Font License</a>.</p>
+  </footer>
+</div>
+<script>
+document.querySelectorAll("pre").forEach(function (pre) {
+  var b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+  b.addEventListener("click", function () {
+    var text = pre.querySelector("code").innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+      b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500);
+    }).catch(function () { b.textContent = "Select and copy"; });
+  });
+  pre.appendChild(b);
+});
+var tabs = document.querySelectorAll('[role="tab"]');
+tabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  });
+});
+</script>
+</body>
+</html>
