@@ -6,17 +6,20 @@
 <title>SpriteSheetGen MCP Server and CLI: AI sprite sheets for 2D games</title>
 <meta name="description" content="Docs for the SpriteSheetGen MCP server and CLI: let Claude Code, Codex or Cursor generate a 2D game character, animate it and export a sprite sheet, JSON atlas and Godot SpriteFrames into your project.">
 <link rel="canonical" href="https://terror668.github.io/spritesheetgen/">
+<link rel="alternate" hreflang="en" href="https://terror668.github.io/spritesheetgen/">
+<link rel="alternate" hreflang="zh-CN" href="https://terror668.github.io/spritesheetgen/zh/">
+<link rel="alternate" hreflang="ja" href="https://terror668.github.io/spritesheetgen/ja/">
+<link rel="alternate" hreflang="ko" href="https://terror668.github.io/spritesheetgen/ko/">
+<link rel="alternate" hreflang="x-default" href="https://terror668.github.io/spritesheetgen/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SpriteSheetGen MCP Server and CLI">
+<meta property="og:title" content="SpriteSheetGen MCP Server and CLI: AI sprite sheets for 2D games">
 <meta property="og:description" content="Generate a 2D game character, animate it and export engine-ready sprite sheets from your AI coding agent.">
 <meta property="og:url" content="https://terror668.github.io/spritesheetgen/">
 <meta property="og:image" content="https://terror668.github.io/spritesheetgen/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="dark">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SpriteSheetGen MCP server and CLI","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux (Node.js 20+)","url":"https://terror668.github.io/spritesheetgen/","downloadUrl":"https://www.npmjs.com/package/@spritesheetgen/cli","sameAs":["https://github.com/terror668/spritesheetgen","https://www.npmjs.com/package/@spritesheetgen/cli"],"publisher":{"@type":"Organization","name":"SpriteSheetGen","url":"https://spritesheetgen.com/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"The CLI and MCP server are free; generation uses credits"}}
-</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "SpriteSheetGen MCP server and CLI", "description": "Docs for the SpriteSheetGen MCP server and CLI: let Claude Code, Codex or Cursor generate a 2D game character, animate it and export a sprite sheet, JSON atlas and Godot SpriteFrames into your project.", "inLanguage": "en", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Linux (Node.js 20+)", "url": "https://terror668.github.io/spritesheetgen/", "downloadUrl": "https://www.npmjs.com/package/@spritesheetgen/cli", "sameAs": ["https://github.com/terror668/spritesheetgen", "https://www.npmjs.com/package/@spritesheetgen/cli"], "publisher": {"@type": "Organization", "name": "SpriteSheetGen", "url": "https://spritesheetgen.com/"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "The CLI and MCP server are free; generation uses credits"}}</script>
 <style>
 @font-face { font-family: "Pixelify Sans"; src: url("media/pixelify-sans-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 :root {
@@ -74,11 +77,16 @@ td:first-child { white-space: nowrap; }
 .steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 16px; top: 13px; font-family: var(--pixel); color: var(--coin); }
 .sheet { background: #12131f; border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; margin: 0 0 16px; }
 .sheet img { display: block; height: 140px; width: auto; max-width: none; }
+.langs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 14px; font-size: 13px; margin: -8px 0 0; }
+.langs a { color: var(--muted); text-decoration: none; }
+.langs a[aria-current="page"] { color: var(--coin); }
+.langs a:hover { color: var(--text); }
 footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
 @media (max-width: 600px) {
   header.top { flex-direction: column; align-items: flex-start; }
   .lead { font-size: 16px; }
   .steps li { padding-left: 48px; }
+  .langs { justify-content: flex-start; margin: 0; }
 }
 </style>
 </head>
@@ -91,6 +99,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--m
       <a href="https://github.com/terror668/spritesheetgen">GitHub</a><a href="https://www.npmjs.com/package/@spritesheetgen/cli">npm</a>
     </nav>
   </header>
+  <nav class="langs" aria-label="Language"><a href="" hreflang="en" lang="en" aria-current="page">English</a> <a href="zh/" hreflang="zh-CN" lang="zh-CN">简体中文</a> <a href="ja/" hreflang="ja" lang="ja">日本語</a> <a href="ko/" hreflang="ko" lang="ko">한국어</a></nav>
 
   <div class="hero">
     <p class="kicker">MCP server + CLI</p>
@@ -129,10 +138,10 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--m
     <div class="panel" role="tabpanel" id="t-claude" aria-labelledby="b-claude"><pre><code>claude mcp add spritesheetgen -s user -- npx -y @spritesheetgen/cli mcp</code></pre></div>
     <div class="panel" role="tabpanel" id="t-codex" aria-labelledby="b-codex" hidden><pre><code>codex mcp add spritesheetgen -- npx -y @spritesheetgen/cli mcp</code></pre></div>
     <div class="panel" role="tabpanel" id="t-json" aria-labelledby="b-json" hidden><pre><code>{
-  "mcpServers": {
-    "spritesheetgen": {
-      "command": "npx",
-      "args": ["-y", "@spritesheetgen/cli", "mcp"]
+  &quot;mcpServers&quot;: {
+    &quot;spritesheetgen&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@spritesheetgen/cli&quot;, &quot;mcp&quot;]
     }
   }
 }</code></pre></div>
@@ -161,8 +170,8 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--m
   <section id="cli">
     <h2>CLI</h2>
     <p>The same features without MCP, with <code>--json</code> output for scripts:</p>
-    <pre><code>spritesheetgen estimate --description "a small beetle knight" --json
-spritesheetgen character --description "a small beetle knight" --client-key my-key-0001 --max-credits 5 --json
+    <pre><code>spritesheetgen estimate --description &quot;a small beetle knight&quot; --json
+spritesheetgen character --description &quot;a small beetle knight&quot; --client-key my-key-0001 --max-credits 5 --json
 spritesheetgen animate --reference generation:CHARACTER_ID --action walk --client-key my-key-0002 --max-credits 10 --json
 spritesheetgen export --id ANIMATION_ID --out ./assets/beetle-walk --name walk --individual-frames --preview --json</code></pre>
     <p>Packing a GIF you already have needs no key and costs nothing:</p>
@@ -185,10 +194,10 @@ spritesheetgen export --id ANIMATION_ID --out ./assets/beetle-walk --name walk -
       </tbody>
     </table></div>
     <h3>Phaser 3</h3>
-    <pre><code>this.load.atlas("knight", "sheet.png", "sheet.json");
+    <pre><code>this.load.atlas(&quot;knight&quot;, &quot;sheet.png&quot;, &quot;sheet.json&quot;);
 this.anims.create({
-  key: "walk",
-  frames: this.anims.generateFrameNames("knight", { prefix: "knight_walk_", end: 11, zeroPad: 2 }),
+  key: &quot;walk&quot;,
+  frames: this.anims.generateFrameNames(&quot;knight&quot;, { prefix: &quot;knight_walk_&quot;, end: 11, zeroPad: 2 }),
   frameRate: 14,
   repeat: -1,
 });</code></pre>
@@ -207,14 +216,15 @@ this.anims.create({
   </footer>
 </div>
 <script>
+var COPY = ["Copy", "Copied", "Select and copy"];
 document.querySelectorAll("pre").forEach(function (pre) {
   var b = document.createElement("button");
-  b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+  b.className = "copy"; b.type = "button"; b.textContent = COPY[0];
   b.addEventListener("click", function () {
     var text = pre.querySelector("code").innerText;
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
-      b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500);
-    }).catch(function () { b.textContent = "Select and copy"; });
+      b.textContent = COPY[1]; setTimeout(function () { b.textContent = COPY[0]; }, 1500);
+    }).catch(function () { b.textContent = COPY[2]; });
   });
   pre.appendChild(b);
 });
