@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpriteSheetGen MCP サーバーと CLI：AI エージェントで 2D ゲームのスプライトシート</title>
+<meta name="description" content="SpriteSheetGen の MCP サーバーと CLI のドキュメント。Claude Code、Codex、Cursor で 2D ゲームのキャラクターとアニメーションを作り、スプライトシート、JSON アトラス、Godot の SpriteFrames をプロジェクトに書き出します。">
+<link rel="canonical" href="https://terror668.github.io/spritesheetgen/ja/">
+<link rel="alternate" hreflang="en" href="https://terror668.github.io/spritesheetgen/">
+<link rel="alternate" hreflang="zh-CN" href="https://terror668.github.io/spritesheetgen/zh/">
+<link rel="alternate" hreflang="ja" href="https://terror668.github.io/spritesheetgen/ja/">
+<link rel="alternate" hreflang="ko" href="https://terror668.github.io/spritesheetgen/ko/">
+<link rel="alternate" hreflang="x-default" href="https://terror668.github.io/spritesheetgen/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SpriteSheetGen MCP サーバーと CLI：AI エージェントで 2D ゲームのスプライトシート">
+<meta property="og:description" content="AI コーディングエージェントから 2D ゲームのキャラクターとアニメーションを作り、エンジン用スプライトシートを書き出します。">
+<meta property="og:url" content="https://terror668.github.io/spritesheetgen/ja/">
+<meta property="og:image" content="https://terror668.github.io/spritesheetgen/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="dark">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "SpriteSheetGen MCP server and CLI", "description": "SpriteSheetGen の MCP サーバーと CLI のドキュメント。Claude Code、Codex、Cursor で 2D ゲームのキャラクターとアニメーションを作り、スプライトシート、JSON アトラス、Godot の SpriteFrames をプロジェクトに書き出します。", "inLanguage": "ja", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Linux (Node.js 20+)", "url": "https://terror668.github.io/spritesheetgen/ja/", "downloadUrl": "https://www.npmjs.com/package/@spritesheetgen/cli", "sameAs": ["https://github.com/terror668/spritesheetgen", "https://www.npmjs.com/package/@spritesheetgen/cli"], "publisher": {"@type": "Organization", "name": "SpriteSheetGen", "url": "https://spritesheetgen.com/"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "CLI と MCP サーバーは無料、生成にはクレジットを使います"}}</script>
+<style>
+@font-face { font-family: "Pixelify Sans"; src: url("../media/pixelify-sans-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+:root {
+  --bg: #1a1c2c; --panel: #232539; --line: #33364f; --text: #e8e9f3; --muted: #a3a6c2;
+  --marquee: #73eff7; --coin: #ffcd75; --red: #ef7d57;
+  --pixel: "Pixelify Sans", ui-monospace, monospace;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--marquee); text-underline-offset: 3px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--pixel); font-size: 20px; color: var(--text); text-decoration: none; }
+.brand img { width: 28px; height: 28px; }
+nav.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; }
+nav.links a { color: var(--muted); text-decoration: none; }
+nav.links a:hover { color: var(--text); }
+.hero { padding: 40px 0 24px; text-align: center; }
+.kicker { font-family: var(--pixel); color: var(--coin); letter-spacing: .04em; margin: 0 0 12px; }
+h1 { font-family: var(--pixel); font-weight: 500; font-size: clamp(30px, 6vw, 48px); line-height: 1.15; margin: 0 0 16px; }
+.lead { color: var(--muted); font-size: 18px; max-width: 680px; margin: 0 auto 28px; }
+.stage { display: flex; justify-content: center; align-items: flex-end; gap: clamp(4px, 2vw, 24px); flex-wrap: wrap; padding: 24px 8px 0; border-bottom: 2px dashed var(--line); margin: 0 auto 8px; max-width: 760px; }
+.stage img { height: clamp(72px, 21vw, 180px); width: auto; image-rendering: auto; }
+.caption { color: var(--muted); font-size: 13px; text-align: center; margin: 0 0 32px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.btn { display: inline-block; padding: 10px 18px; border: 2px solid var(--marquee); color: var(--bg); background: var(--marquee); font-weight: 600; text-decoration: none; border-radius: 4px; }
+.btn.ghost { background: transparent; color: var(--marquee); }
+section { padding: 36px 0; border-top: 1px solid var(--line); }
+h2 { font-family: var(--pixel); font-weight: 500; font-size: 26px; margin: 0 0 14px; }
+h3 { font-size: 17px; margin: 24px 0 8px; }
+p { margin: 0 0 14px; }
+.muted { color: var(--muted); }
+pre { position: relative; margin: 0 0 16px; padding: 14px 16px; background: #12131f; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; font: 14px/1.55 var(--mono); }
+code { font-family: var(--mono); font-size: .92em; }
+p code, td code, li code { background: #12131f; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+pre code { background: none !important; border: 0 !important; padding: 0 !important; }
+.steps pre { margin: 10px 0; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--mono); color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.tabs button { font: 14px system-ui, sans-serif; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--bg); background: var(--coin); border-color: var(--coin); }
+.panel[hidden] { display: none; }
+.table { overflow-x: auto; margin: 0 0 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--coin); font-weight: 600; white-space: nowrap; }
+td:first-child { white-space: nowrap; }
+.paid { color: var(--red); }
+.free { color: #a7f070; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.steps li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px 14px 56px; position: relative; }
+.steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 16px; top: 13px; font-family: var(--pixel); color: var(--coin); }
+.sheet { background: #12131f; border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; margin: 0 0 16px; }
+.sheet img { display: block; height: 140px; width: auto; max-width: none; }
+.langs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 14px; font-size: 13px; margin: -8px 0 0; }
+.langs a { color: var(--muted); text-decoration: none; }
+.langs a[aria-current="page"] { color: var(--coin); }
+.langs a:hover { color: var(--text); }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+@media (max-width: 600px) {
+  header.top { flex-direction: column; align-items: flex-start; }
+  .lead { font-size: 16px; }
+  .steps li { padding-left: 48px; }
+  .langs { justify-content: flex-start; margin: 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://spritesheetgen.com/ja/"><img src="../favicon.svg" alt="SpriteSheetGen logo" width="28" height="28">SpriteSheetGen</a>
+    <nav class="links" aria-label="Docs">
+      <a href="#setup">セットアップ</a><a href="#tools">ツール</a><a href="#cli">CLI</a><a href="#export">書き出しファイル</a>
+      <a href="https://github.com/terror668/spritesheetgen">GitHub</a><a href="https://www.npmjs.com/package/@spritesheetgen/cli">npm</a>
+    </nav>
+  </header>
+  <nav class="langs" aria-label="言語"><a href="../" hreflang="en" lang="en">English</a> <a href="../zh/" hreflang="zh-CN" lang="zh-CN">简体中文</a> <a href="../ja/" hreflang="ja" lang="ja" aria-current="page">日本語</a> <a href="../ko/" hreflang="ko" lang="ko">한국어</a></nav>
+
+  <div class="hero">
+    <p class="kicker">MCP サーバー + CLI</p>
+    <h1>コーディングエージェントで 2D ゲームのスプライトシートを</h1>
+    <p class="lead">Claude Code、Codex、Cursor にキャラクターと動きを伝えるだけ。SpriteSheetGen が生成し、スプライトシート、JSON アトラス、Godot の <code>SpriteFrames</code> ファイルをプロジェクトに置きます。</p>
+    <div class="stage">
+      <img src="../media/knight-walk.webp" alt="小さな騎士の歩きアニメーション" width="149" height="200">
+      <img src="../media/witch-walk.webp" alt="小さな魔女の歩きアニメーション" width="175" height="200">
+      <img src="../media/dragon-walk.webp" alt="子どもドラゴンの歩きアニメーション" width="164" height="200">
+      <img src="../media/mech-walk.webp" alt="戦闘メカの歩きアニメーション" width="183" height="200">
+    </div>
+    <p class="caption">どれも SpriteSheetGen で作った歩きアニメーションです（騎士の画像はロゴのイラストで、アニメーションだけを生成）。</p>
+    <div class="cta">
+      <a class="btn" href="#setup">セットアップ</a>
+      <a class="btn ghost" href="https://spritesheetgen.com/ja/">ブラウザで試す</a>
+    </div>
+  </div>
+
+  <section id="setup">
+    <h2>セットアップ</h2>
+    <ol class="steps">
+      <li><strong>エージェントにインストールさせる。</strong>Claude Code、Codex など MCP 対応のエージェントにこう送ります：
+        <pre><code>SpriteSheetGen をセットアップして：https://spritesheetgen.com/agents/install.txt の手順に従って</code></pre>
+        MCP サーバーと、ツールの使い方・予算・エンジンへの取り込みを知っているスキルが追加されます。</li>
+      <li><a href="https://spritesheetgen.com/ja/account/">アカウントページ</a>で <strong>API キーを作成</strong>します。キーごとに権限と 1 日・合計のクレジット上限があり、許可するまで新しいキーは消費できません。</li>
+      <li><strong>ご自身のターミナルでログイン</strong>します。チャットには貼らないでください（入力は表示されません）：
+        <pre><code>npx -y @spritesheetgen/cli login</code></pre></li>
+    </ol>
+
+    <h3>MCP サーバーを手動で追加する</h3>
+    <div class="tabs" role="tablist" aria-label="MCP client">
+      <button role="tab" aria-selected="true" aria-controls="t-claude" id="b-claude">Claude Code</button>
+      <button role="tab" aria-selected="false" aria-controls="t-codex" id="b-codex">Codex</button>
+      <button role="tab" aria-selected="false" aria-controls="t-json" id="b-json">Cursor、Claude Desktop など</button>
+    </div>
+    <div class="panel" role="tabpanel" id="t-claude" aria-labelledby="b-claude"><pre><code>claude mcp add spritesheetgen -s user -- npx -y @spritesheetgen/cli mcp</code></pre></div>
+    <div class="panel" role="tabpanel" id="t-codex" aria-labelledby="b-codex" hidden><pre><code>codex mcp add spritesheetgen -- npx -y @spritesheetgen/cli mcp</code></pre></div>
+    <div class="panel" role="tabpanel" id="t-json" aria-labelledby="b-json" hidden><pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;spritesheetgen&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@spritesheetgen/cli&quot;, &quot;mcp&quot;]
+    }
+  }
+}</code></pre></div>
+    <p class="muted">Node.js 20 以上が必要です。サーバーは stdio で動き、<code>login</code> で保存したキー（または <code>SPRITESHEETGEN_API_KEY</code>）を読むので、あとからログインしても再起動は不要です。</p>
+  </section>
+
+  <section id="tools">
+    <h2>ツール</h2>
+    <div class="table"><table>
+      <thead><tr><th>ツール</th><th>クレジット</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><code>estimate_sprite</code></td><td class="free">無料</td><td>キャラクターや動作の価格、残高、キーの残り予算を確認</td></tr>
+        <tr><td><code>improve_prompt</code></td><td class="free">無料</td><td>ざっくりしたアイデアを生成しやすいキャラクター説明に整える（1 日の無料回数あり）</td></tr>
+        <tr><td><code>create_character</code></td><td class="paid">有料</td><td>説明からキャラクター画像を 1 枚生成</td></tr>
+        <tr><td><code>upload_character</code></td><td class="free">無料</td><td>手持ちの PNG・JPEG・WebP のキャラクターを使う</td></tr>
+        <tr><td><code>animate_character</code></td><td class="paid">有料</td><td>アニメーションを 1 つ生成：<code>walk</code>、<code>run</code>、<code>idle</code>、<code>attack</code>、<code>jump</code></td></tr>
+        <tr><td><code>get_generation</code></td><td class="free">無料</td><td>生成の状態と結果を確認（完了まで待つことも可能）</td></tr>
+        <tr><td><code>list_characters</code></td><td class="free">無料</td><td>生成またはアップロードしたキャラクターの一覧</td></tr>
+        <tr><td><code>list_actions</code></td><td class="free">無料</td><td>キャラクターが持っているアニメーションの一覧（二重払いを防ぐ）</td></tr>
+        <tr><td><code>export_sprite_sheet</code></td><td class="free">無料</td><td>完成したアニメーション（または手元の GIF）をローカルのフォルダに書き出す</td></tr>
+      </tbody>
+    </table></div>
+    <p>エージェントはまず見積もりを出し、あなたが了承してから消費します。有料の呼び出しには必ず <code>max_credits</code> の上限と <code>client_key</code> が付くので、再試行しても二重に請求されません。新規アカウントには 25 クレジット。最新の価格は<a href="https://spritesheetgen.com/ja/pricing/">料金ページ</a>へ。</p>
+  </section>
+
+  <section id="cli">
+    <h2>CLI</h2>
+    <p>MCP なしでも同じ機能が使えます。スクリプト向けに <code>--json</code> 出力もあります：</p>
+    <pre><code>spritesheetgen estimate --description &quot;a small beetle knight&quot; --json
+spritesheetgen character --description &quot;a small beetle knight&quot; --client-key my-key-0001 --max-credits 5 --json
+spritesheetgen animate --reference generation:CHARACTER_ID --action walk --client-key my-key-0002 --max-credits 10 --json
+spritesheetgen export --id ANIMATION_ID --out ./assets/beetle-walk --name walk --individual-frames --preview --json</code></pre>
+    <p>手持ちの GIF の書き出しはキー不要・無料です：</p>
+    <pre><code>npx -y @spritesheetgen/cli export --file ./walk.gif --out ./assets/walk --name hero_walk --preview</code></pre>
+  </section>
+
+  <section id="export">
+    <h2>書き出されるファイル</h2>
+    <div class="sheet"><img src="https://raw.githubusercontent.com/terror668/spritesheetgen/main/samples/little-knight-walk/sheet.png" alt="小さな騎士の歩きスプライトシート：12 フレームを 1 行、透明背景" width="1260" height="140" loading="lazy"></div>
+    <p class="muted"><a href="https://github.com/terror668/spritesheetgen/tree/main/samples/little-knight-walk">サンプル</a>：グリーンバックの騎士の歩きを CLI で書き出したもの（背景除去、エッジ処理、フレーム位置合わせ）。</p>
+    <div class="table"><table>
+      <thead><tr><th>ファイル</th><th>使い道</th></tr></thead>
+      <tbody>
+        <tr><td><code>sheet.png</code></td><td>どのエンジンでも：フレームを 1 行またはグリッドに並べた透明 PNG</td></tr>
+        <tr><td><code>sheet.json</code></td><td>Phaser、PixiJS など TexturePacker JSON（hash）を読むエンジン（<code>animations</code> 付き）</td></tr>
+        <tr><td><code>animation.tres</code></td><td>Godot 4：<code>AnimatedSprite2D</code> 用の <code>SpriteFrames</code> リソース（速度とループ設定済み）</td></tr>
+        <tr><td><code>preview.gif</code></td><td>すぐに確認するためのプレビュー</td></tr>
+        <tr><td><code>export.json</code></td><td>使った設定（同じ書き出しを繰り返すため）</td></tr>
+        <tr><td><code>frames/*.png</code></td><td>Unity、GameMaker など単体画像を使うツール（<code>--individual-frames</code>）</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Phaser 3</h3>
+    <pre><code>this.load.atlas(&quot;knight&quot;, &quot;sheet.png&quot;, &quot;sheet.json&quot;);
+this.anims.create({
+  key: &quot;walk&quot;,
+  frames: this.anims.generateFrameNames(&quot;knight&quot;, { prefix: &quot;knight_walk_&quot;, end: 11, zeroPad: 2 }),
+  frameRate: 14,
+  repeat: -1,
+});</code></pre>
+    <h3>Godot 4</h3>
+    <p><code>sheet.png</code> と <code>animation.tres</code> を同じフォルダに置き、<code>AnimatedSprite2D</code> を追加して、その <strong>Sprite Frames</strong> に <code>animation.tres</code> をドラッグします。</p>
+  </section>
+
+  <section>
+    <h2>エージェントなしならブラウザで</h2>
+    <p>ここまでの機能はすべて <a href="https://spritesheetgen.com/ja/">spritesheetgen.com</a> でも使えます。端末内で動く無料ツールもあります：<a href="https://spritesheetgen.com/ja/video-to-sprite-sheet/">動画からスプライトシート</a>、<a href="https://spritesheetgen.com/ja/gif-to-sprite-sheet/">GIF からスプライトシート</a>、<a href="https://spritesheetgen.com/ja/sprite-sheet-maker/">スプライトシート作成</a>、<a href="https://spritesheetgen.com/ja/sprite-sheet-cutter/">スプライトシート分割</a>、<a href="https://spritesheetgen.com/ja/sprite-sheet-to-gif/">スプライトシートから GIF</a>。</p>
+  </section>
+
+  <footer>
+    <p>SpriteSheetGen · <a href="https://spritesheetgen.com/ja/">spritesheetgen.com</a> · <a href="https://github.com/terror668/spritesheetgen/issues">Issues</a> · <a href="mailto:support@spritesheetgen.com">support@spritesheetgen.com</a></p>
+    <p>このページは MIT ライセンスです。Pixelify Sans は <a href="../media/pixelify-sans-OFL.txt">SIL Open Font License</a> で使用しています。</p>
+  </footer>
+</div>
+<script>
+var COPY = ["コピー", "コピーしました", "手動でコピーしてください"];
+document.querySelectorAll("pre").forEach(function (pre) {
+  var b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = COPY[0];
+  b.addEventListener("click", function () {
+    var text = pre.querySelector("code").innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+      b.textContent = COPY[1]; setTimeout(function () { b.textContent = COPY[0]; }, 1500);
+    }).catch(function () { b.textContent = COPY[2]; });
+  });
+  pre.appendChild(b);
+});
+var tabs = document.querySelectorAll('[role="tab"]');
+tabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  });
+});
+</script>
+</body>
+</html>
