@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpriteSheetGen MCP 服务与 CLI：用 AI 助手生成 2D 游戏精灵图</title>
+<meta name="description" content="SpriteSheetGen MCP 服务与命令行文档：让 Claude Code、Codex 或 Cursor 生成 2D 游戏角色和动画，并把精灵图、JSON 图集和 Godot SpriteFrames 直接导出到你的项目里。">
+<link rel="canonical" href="https://terror668.github.io/spritesheetgen/zh/">
+<link rel="alternate" hreflang="en" href="https://terror668.github.io/spritesheetgen/">
+<link rel="alternate" hreflang="zh-CN" href="https://terror668.github.io/spritesheetgen/zh/">
+<link rel="alternate" hreflang="ja" href="https://terror668.github.io/spritesheetgen/ja/">
+<link rel="alternate" hreflang="ko" href="https://terror668.github.io/spritesheetgen/ko/">
+<link rel="alternate" hreflang="x-default" href="https://terror668.github.io/spritesheetgen/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SpriteSheetGen MCP 服务与 CLI：用 AI 助手生成 2D 游戏精灵图">
+<meta property="og:description" content="在 AI 编程助手里生成 2D 游戏角色和动画，导出引擎可直接用的精灵图。">
+<meta property="og:url" content="https://terror668.github.io/spritesheetgen/zh/">
+<meta property="og:image" content="https://terror668.github.io/spritesheetgen/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="dark">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "SpriteSheetGen MCP server and CLI", "description": "SpriteSheetGen MCP 服务与命令行文档：让 Claude Code、Codex 或 Cursor 生成 2D 游戏角色和动画，并把精灵图、JSON 图集和 Godot SpriteFrames 直接导出到你的项目里。", "inLanguage": "zh-CN", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Linux (Node.js 20+)", "url": "https://terror668.github.io/spritesheetgen/zh/", "downloadUrl": "https://www.npmjs.com/package/@spritesheetgen/cli", "sameAs": ["https://github.com/terror668/spritesheetgen", "https://www.npmjs.com/package/@spritesheetgen/cli"], "publisher": {"@type": "Organization", "name": "SpriteSheetGen", "url": "https://spritesheetgen.com/"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "命令行和 MCP 服务免费，生成消耗积分"}}</script>
+<style>
+@font-face { font-family: "Pixelify Sans"; src: url("../media/pixelify-sans-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+:root {
+  --bg: #1a1c2c; --panel: #232539; --line: #33364f; --text: #e8e9f3; --muted: #a3a6c2;
+  --marquee: #73eff7; --coin: #ffcd75; --red: #ef7d57;
+  --pixel: "Pixelify Sans", ui-monospace, monospace;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--marquee); text-underline-offset: 3px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--pixel); font-size: 20px; color: var(--text); text-decoration: none; }
+.brand img { width: 28px; height: 28px; }
+nav.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; }
+nav.links a { color: var(--muted); text-decoration: none; }
+nav.links a:hover { color: var(--text); }
+.hero { padding: 40px 0 24px; text-align: center; }
+.kicker { font-family: var(--pixel); color: var(--coin); letter-spacing: .04em; margin: 0 0 12px; }
+h1 { font-family: var(--pixel); font-weight: 500; font-size: clamp(30px, 6vw, 48px); line-height: 1.15; margin: 0 0 16px; }
+.lead { color: var(--muted); font-size: 18px; max-width: 680px; margin: 0 auto 28px; }
+.stage { display: flex; justify-content: center; align-items: flex-end; gap: clamp(4px, 2vw, 24px); flex-wrap: wrap; padding: 24px 8px 0; border-bottom: 2px dashed var(--line); margin: 0 auto 8px; max-width: 760px; }
+.stage img { height: clamp(72px, 21vw, 180px); width: auto; image-rendering: auto; }
+.caption { color: var(--muted); font-size: 13px; text-align: center; margin: 0 0 32px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.btn { display: inline-block; padding: 10px 18px; border: 2px solid var(--marquee); color: var(--bg); background: var(--marquee); font-weight: 600; text-decoration: none; border-radius: 4px; }
+.btn.ghost { background: transparent; color: var(--marquee); }
+section { padding: 36px 0; border-top: 1px solid var(--line); }
+h2 { font-family: var(--pixel); font-weight: 500; font-size: 26px; margin: 0 0 14px; }
+h3 { font-size: 17px; margin: 24px 0 8px; }
+p { margin: 0 0 14px; }
+.muted { color: var(--muted); }
+pre { position: relative; margin: 0 0 16px; padding: 14px 16px; background: #12131f; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; font: 14px/1.55 var(--mono); }
+code { font-family: var(--mono); font-size: .92em; }
+p code, td code, li code { background: #12131f; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+pre code { background: none !important; border: 0 !important; padding: 0 !important; }
+.steps pre { margin: 10px 0; }
+.copy { position: absolute; top: 8px; right: 8px; font: 12px var(--mono); color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; cursor: pointer; }
+.copy:hover { color: var(--text); }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.tabs button { font: 14px system-ui, sans-serif; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--bg); background: var(--coin); border-color: var(--coin); }
+.panel[hidden] { display: none; }
+.table { overflow-x: auto; margin: 0 0 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--coin); font-weight: 600; white-space: nowrap; }
+td:first-child { white-space: nowrap; }
+.paid { color: var(--red); }
+.free { color: #a7f070; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.steps li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px 14px 56px; position: relative; }
+.steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 16px; top: 13px; font-family: var(--pixel); color: var(--coin); }
+.sheet { background: #12131f; border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; margin: 0 0 16px; }
+.sheet img { display: block; height: 140px; width: auto; max-width: none; }
+.langs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 14px; font-size: 13px; margin: -8px 0 0; }
+.langs a { color: var(--muted); text-decoration: none; }
+.langs a[aria-current="page"] { color: var(--coin); }
+.langs a:hover { color: var(--text); }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+@media (max-width: 600px) {
+  header.top { flex-direction: column; align-items: flex-start; }
+  .lead { font-size: 16px; }
+  .steps li { padding-left: 48px; }
+  .langs { justify-content: flex-start; margin: 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://spritesheetgen.com/zh/"><img src="../favicon.svg" alt="SpriteSheetGen logo" width="28" height="28">SpriteSheetGen</a>
+    <nav class="links" aria-label="Docs">
+      <a href="#setup">安装</a><a href="#tools">工具</a><a href="#cli">命令行</a><a href="#export">导出文件</a>
+      <a href="https://github.com/terror668/spritesheetgen">GitHub</a><a href="https://www.npmjs.com/package/@spritesheetgen/cli">npm</a>
+    </nav>
+  </header>
+  <nav class="langs" aria-label="语言"><a href="../" hreflang="en" lang="en">English</a> <a href="../zh/" hreflang="zh-CN" lang="zh-CN" aria-current="page">简体中文</a> <a href="../ja/" hreflang="ja" lang="ja">日本語</a> <a href="../ko/" hreflang="ko" lang="ko">한국어</a></nav>
+
+  <div class="hero">
+    <p class="kicker">MCP 服务 + 命令行</p>
+    <h1>让 AI 编程助手为你的 2D 游戏做精灵图</h1>
+    <p class="lead">在 Claude Code、Codex 或 Cursor 里说出你要的角色和动作，SpriteSheetGen 生成后把精灵图、JSON 图集和 Godot <code>SpriteFrames</code> 文件直接放进你的项目。</p>
+    <div class="stage">
+      <img src="../media/knight-walk.webp" alt="小骑士行走动画" width="149" height="200">
+      <img src="../media/witch-walk.webp" alt="小女巫行走动画" width="175" height="200">
+      <img src="../media/dragon-walk.webp" alt="小龙行走动画" width="164" height="200">
+      <img src="../media/mech-walk.webp" alt="机甲行走动画" width="183" height="200">
+    </div>
+    <p class="caption">以上行走动画均由 SpriteSheetGen 制作（小骑士的形象是我们的 logo 原画，只有动画是生成的）。</p>
+    <div class="cta">
+      <a class="btn" href="#setup">开始安装</a>
+      <a class="btn ghost" href="https://spritesheetgen.com/zh/">在浏览器里试试</a>
+    </div>
+  </div>
+
+  <section id="setup">
+    <h2>安装</h2>
+    <ol class="steps">
+      <li><strong>让助手帮你装。</strong>把这句话发给 Claude Code、Codex 或其他支持 MCP 的助手：
+        <pre><code>帮我安装 SpriteSheetGen：按 https://spritesheetgen.com/agents/install.txt 的步骤操作</code></pre>
+        它会添加 MCP 服务，并装好一份说明（skill），里面写了工具用法、额度规则和各引擎的导入方法。</li>
+      <li>在<a href="https://spritesheetgen.com/zh/account/">账户页</a><strong>创建 API 密钥</strong>。每个密钥有自己的权限和每日、总额度上限；新建的密钥在你允许之前不能消费积分。</li>
+      <li><strong>在你自己的终端里登录</strong>，不要在聊天里粘贴（输入密钥时不会显示）：
+        <pre><code>npx -y @spritesheetgen/cli login</code></pre></li>
+    </ol>
+
+    <h3>也可以手动添加 MCP 服务</h3>
+    <div class="tabs" role="tablist" aria-label="MCP client">
+      <button role="tab" aria-selected="true" aria-controls="t-claude" id="b-claude">Claude Code</button>
+      <button role="tab" aria-selected="false" aria-controls="t-codex" id="b-codex">Codex</button>
+      <button role="tab" aria-selected="false" aria-controls="t-json" id="b-json">Cursor、Claude Desktop 等</button>
+    </div>
+    <div class="panel" role="tabpanel" id="t-claude" aria-labelledby="b-claude"><pre><code>claude mcp add spritesheetgen -s user -- npx -y @spritesheetgen/cli mcp</code></pre></div>
+    <div class="panel" role="tabpanel" id="t-codex" aria-labelledby="b-codex" hidden><pre><code>codex mcp add spritesheetgen -- npx -y @spritesheetgen/cli mcp</code></pre></div>
+    <div class="panel" role="tabpanel" id="t-json" aria-labelledby="b-json" hidden><pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;spritesheetgen&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@spritesheetgen/cli&quot;, &quot;mcp&quot;]
+    }
+  }
+}</code></pre></div>
+    <p class="muted">需要 Node.js 20 或更新版本。服务通过 stdio 通信，读取 <code>login</code> 保存的密钥（或环境变量 <code>SPRITESHEETGEN_API_KEY</code>），之后再登录也不用重启。</p>
+  </section>
+
+  <section id="tools">
+    <h2>工具</h2>
+    <div class="table"><table>
+      <thead><tr><th>工具</th><th>积分</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td><code>estimate_sprite</code></td><td class="free">免费</td><td>查询生成角色或动作的价格、你的余额和密钥剩余额度</td></tr>
+        <tr><td><code>improve_prompt</code></td><td class="free">免费</td><td>把粗略的想法改写成容易生成好的角色描述（每天有少量免费次数）</td></tr>
+        <tr><td><code>create_character</code></td><td class="paid">付费</td><td>根据描述生成一张角色图</td></tr>
+        <tr><td><code>upload_character</code></td><td class="free">免费</td><td>改用你自己的 PNG、JPEG 或 WebP 角色图</td></tr>
+        <tr><td><code>animate_character</code></td><td class="paid">付费</td><td>为角色生成一个动作：<code>walk</code>（走）、<code>run</code>（跑）、<code>idle</code>（待机）、<code>attack</code>（攻击）或 <code>jump</code>（跳）</td></tr>
+        <tr><td><code>get_generation</code></td><td class="free">免费</td><td>查看生成任务的状态和结果，可以等待完成</td></tr>
+        <tr><td><code>list_characters</code></td><td class="free">免费</td><td>列出你生成或上传过的角色</td></tr>
+        <tr><td><code>list_actions</code></td><td class="free">免费</td><td>列出角色已有的动画，避免重复付费</td></tr>
+        <tr><td><code>export_sprite_sheet</code></td><td class="free">免费</td><td>把完成的动画（或本地 GIF）打包到你电脑上的文件夹</td></tr>
+      </tbody>
+    </table></div>
+    <p>助手会先报价，经你同意后才消费积分。每次付费调用都带 <code>max_credits</code> 上限和 <code>client_key</code>，重试同一请求不会重复扣费。新账户赠送 25 积分，当前价格见<a href="https://spritesheetgen.com/zh/pricing/">价格页</a>。</p>
+  </section>
+
+  <section id="cli">
+    <h2>命令行</h2>
+    <p>不用 MCP 也能用同样的功能，加 <code>--json</code> 方便脚本处理：</p>
+    <pre><code>spritesheetgen estimate --description &quot;a small beetle knight&quot; --json
+spritesheetgen character --description &quot;a small beetle knight&quot; --client-key my-key-0001 --max-credits 5 --json
+spritesheetgen animate --reference generation:CHARACTER_ID --action walk --client-key my-key-0002 --max-credits 10 --json
+spritesheetgen export --id ANIMATION_ID --out ./assets/beetle-walk --name walk --individual-frames --preview --json</code></pre>
+    <p>打包你已有的 GIF 不需要密钥，也不花积分：</p>
+    <pre><code>npx -y @spritesheetgen/cli export --file ./walk.gif --out ./assets/walk --name hero_walk --preview</code></pre>
+  </section>
+
+  <section id="export">
+    <h2>导出的文件</h2>
+    <div class="sheet"><img src="https://raw.githubusercontent.com/terror668/spritesheetgen/main/samples/little-knight-walk/sheet.png" alt="小骑士行走精灵图：12 帧排成一行，透明背景" width="1260" height="140" loading="lazy"></div>
+    <p class="muted"><a href="https://github.com/terror668/spritesheetgen/tree/main/samples/little-knight-walk">示例导出</a>：小骑士在绿幕上的行走动画，由命令行打包（去背景、清理边缘、对齐帧）。</p>
+    <div class="table"><table>
+      <thead><tr><th>文件</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td><code>sheet.png</code></td><td>任何引擎：帧排成一行或网格，透明背景</td></tr>
+        <tr><td><code>sheet.json</code></td><td>Phaser、PixiJS 等读取 TexturePacker JSON（hash）的引擎，带 <code>animations</code> 段</td></tr>
+        <tr><td><code>animation.tres</code></td><td>Godot 4：给 <code>AnimatedSprite2D</code> 用的 <code>SpriteFrames</code> 资源，已设好速度和循环</td></tr>
+        <tr><td><code>preview.gif</code></td><td>快速预览</td></tr>
+        <tr><td><code>export.json</code></td><td>本次使用的设置，方便重复导出</td></tr>
+        <tr><td><code>frames/*.png</code></td><td>Unity、GameMaker 等需要单张图片的工具（<code>--individual-frames</code>）</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Phaser 3</h3>
+    <pre><code>this.load.atlas(&quot;knight&quot;, &quot;sheet.png&quot;, &quot;sheet.json&quot;);
+this.anims.create({
+  key: &quot;walk&quot;,
+  frames: this.anims.generateFrameNames(&quot;knight&quot;, { prefix: &quot;knight_walk_&quot;, end: 11, zeroPad: 2 }),
+  frameRate: 14,
+  repeat: -1,
+});</code></pre>
+    <h3>Godot 4</h3>
+    <p>把 <code>sheet.png</code> 和 <code>animation.tres</code> 放在同一个文件夹，添加一个 <code>AnimatedSprite2D</code>，把 <code>animation.tres</code> 拖到它的 <strong>Sprite Frames</strong> 属性上。</p>
+  </section>
+
+  <section>
+    <h2>不用助手？在浏览器里用</h2>
+    <p>以上功能在 <a href="https://spritesheetgen.com/zh/">spritesheetgen.com</a> 上都能用，另有在你设备上运行的免费工具：<a href="https://spritesheetgen.com/zh/video-to-sprite-sheet/">视频转精灵图</a>、<a href="https://spritesheetgen.com/zh/gif-to-sprite-sheet/">GIF 转精灵图</a>、<a href="https://spritesheetgen.com/zh/sprite-sheet-maker/">精灵图制作</a>、<a href="https://spritesheetgen.com/zh/sprite-sheet-cutter/">精灵图切割</a>和<a href="https://spritesheetgen.com/zh/sprite-sheet-to-gif/">精灵图转 GIF</a>。</p>
+  </section>
+
+  <footer>
+    <p>SpriteSheetGen · <a href="https://spritesheetgen.com/zh/">spritesheetgen.com</a> · <a href="https://github.com/terror668/spritesheetgen/issues">问题反馈</a> · <a href="mailto:support@spritesheetgen.com">support@spritesheetgen.com</a></p>
+    <p>本页面采用 MIT 许可。Pixelify Sans 字体依 <a href="../media/pixelify-sans-OFL.txt">SIL Open Font License</a> 使用。</p>
+  </footer>
+</div>
+<script>
+var COPY = ["复制", "已复制", "请手动复制"];
+document.querySelectorAll("pre").forEach(function (pre) {
+  var b = document.createElement("button");
+  b.className = "copy"; b.type = "button"; b.textContent = COPY[0];
+  b.addEventListener("click", function () {
+    var text = pre.querySelector("code").innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+      b.textContent = COPY[1]; setTimeout(function () { b.textContent = COPY[0]; }, 1500);
+    }).catch(function () { b.textContent = COPY[2]; });
+  });
+  pre.appendChild(b);
+});
+var tabs = document.querySelectorAll('[role="tab"]');
+tabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  });
+});
+</script>
+</body>
+</html>
