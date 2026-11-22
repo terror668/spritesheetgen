@@ -1,0 +1,333 @@
+{
+  "frames": {
+    "knight_walk_00": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_01": {
+      "frame": {
+        "x": 312,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_02": {
+      "frame": {
+        "x": 624,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_03": {
+      "frame": {
+        "x": 936,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_04": {
+      "frame": {
+        "x": 1248,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_05": {
+      "frame": {
+        "x": 1560,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_06": {
+      "frame": {
+        "x": 1872,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_07": {
+      "frame": {
+        "x": 2184,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_08": {
+      "frame": {
+        "x": 2496,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_09": {
+      "frame": {
+        "x": 2808,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_10": {
+      "frame": {
+        "x": 3120,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    },
+    "knight_walk_11": {
+      "frame": {
+        "x": 3432,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 416
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 416
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9952
+      },
+      "duration": 71
+    }
+  },
+  "animations": {
+    "knight_walk": [
+      "knight_walk_00",
+      "knight_walk_01",
+      "knight_walk_02",
+      "knight_walk_03",
+      "knight_walk_04",
+      "knight_walk_05",
+      "knight_walk_06",
+      "knight_walk_07",
+      "knight_walk_08",
+      "knight_walk_09",
+      "knight_walk_10",
+      "knight_walk_11"
+    ]
+  },
+  "meta": {
+    "app": "sprite-studio",
+    "version": "1.0",
+    "image": "sheet.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 3744,
+      "h": 416
+    },
+    "scale": "1",
+    "frameRate": 14,
+    "loop": true
+  }
+}

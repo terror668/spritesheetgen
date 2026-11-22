@@ -1,0 +1,38 @@
+{
+  "processor": "0.1.0",
+  "sourceFrames": 12,
+  "decodedFrames": 12,
+  "frameCount": 12,
+  "fps": 14,
+  "width": 3744,
+  "height": 416,
+  "frameWidth": 312,
+  "frameHeight": 416,
+  "columns": 12,
+  "rows": 1,
+  "animationName": "knight_walk",
+  "settings": {
+    "start": 0,
+    "end": 12,
+    "count": 12,
+    "dedupe": true,
+    "removeBackground": true,
+    "tolerance": 60,
+    "softness": 40,
+    "edgeCleanup": "strong",
+    "align": true,
+    "padding": 2,
+    "pixelate": false,
+    "targetHeight": 64,
+    "palette": "auto",
+    "autoColors": 16,
+    "columns": 0
+  },
+  "files": [
+    "sheet.png",
+    "sheet.json",
+    "animation.tres",
+    "preview.gif",
+    "export.json"
+  ]
+}
