@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "spritesheetgen": {
+      "command": "npx",
+      "args": ["-y", "@spritesheetgen/cli", "mcp"]
+    }
+  }
+}
