@@ -6,7 +6,14 @@ AI sprite sheet generator for 2D games, as an **MCP server** and a **CLI**. Desc
 
 Website: **[spritesheetgen.com](https://spritesheetgen.com/)** · Free browser tools: [video to sprite sheet](https://spritesheetgen.com/video-to-sprite-sheet/), [GIF to sprite sheet](https://spritesheetgen.com/gif-to-sprite-sheet/), [sprite sheet maker](https://spritesheetgen.com/sprite-sheet-maker/), [cutter](https://spritesheetgen.com/sprite-sheet-cutter/), [sprite sheet to GIF](https://spritesheetgen.com/sprite-sheet-to-gif/)
 
-<p align="center"><img src="samples/samurai-walk/preview.gif" alt="Pixel samurai walk cycle, 8 frames exported by the CLI" height="231"></p>
+<p align="center">
+  <img src="docs/media/knight-walk.webp" alt="Little knight walk cycle" height="160">
+  <img src="docs/media/witch-walk.webp" alt="Little witch walk cycle" height="160">
+  <img src="docs/media/dragon-walk.webp" alt="Baby dragon walk cycle" height="160">
+  <img src="docs/media/mech-walk.webp" alt="Combat mech walk cycle" height="160">
+</p>
+
+**Docs: [terror668.github.io/spritesheetgen](https://terror668.github.io/spritesheetgen/)**
 
 ## Quick start with an AI agent
 
@@ -90,22 +97,22 @@ npx -y @spritesheetgen/cli export --file ./walk.gif --out ./assets/walk --name h
 
 ## What an export contains
 
-See [samples/samurai-walk](samples/samurai-walk):
+See [samples/little-knight-walk](samples/little-knight-walk): the knight's walk on a green screen, packed by the CLI (background removed, edges cleaned, frames aligned).
 
 | File | Use it in |
 | --- | --- |
 | `sheet.png` | Any engine: frames in a row (or a grid), transparent background |
 | `sheet.json` | Phaser, PixiJS and other engines that read TexturePacker JSON (hash), with an `animations` block |
 | `animation.tres` | Godot 4: a `SpriteFrames` resource for `AnimatedSprite2D`, with speed and looping set |
-| `preview.gif` | A quick look, or a README like this one |
+| `preview.gif` | A quick look |
 | `export.json` | The settings used, to repeat the export |
 | `frames/*.png`, `frames.zip` | Unity, GameMaker or any tool that wants single images (`--individual-frames`) |
 
 Phaser 3:
 
 ```js
-this.load.atlas("hero", "sheet.png", "sheet.json");
-this.anims.create({ key: "walk", frames: this.anims.generateFrameNames("hero", { prefix: "samurai_walk_", end: 7, zeroPad: 2 }), frameRate: 10, repeat: -1 });
+this.load.atlas("knight", "sheet.png", "sheet.json");
+this.anims.create({ key: "walk", frames: this.anims.generateFrameNames("knight", { prefix: "knight_walk_", end: 11, zeroPad: 2 }), frameRate: 14, repeat: -1 });
 ```
 
 Godot 4: put `sheet.png` and `animation.tres` in the same folder, then drag `animation.tres` onto an `AnimatedSprite2D`'s **Sprite Frames**.
