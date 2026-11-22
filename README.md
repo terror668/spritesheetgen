@@ -1,10 +1,14 @@
 # SpriteSheetGen
 
+**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
+
 [![npm](https://img.shields.io/npm/v/@spritesheetgen/cli?label=%40spritesheetgen%2Fcli)](https://www.npmjs.com/package/@spritesheetgen/cli)
 
 AI sprite sheet generator for 2D games, as an **MCP server** and a **CLI**. Describe a character, animate it (walk, run, idle, attack, jump), and get engine-ready files in your project folder: a sprite sheet PNG, a TexturePacker JSON atlas, a Godot 4 `SpriteFrames` resource, single frames and a GIF preview.
 
-Website: **[spritesheetgen.com](https://spritesheetgen.com/)** · Free browser tools: [video to sprite sheet](https://spritesheetgen.com/video-to-sprite-sheet/), [GIF to sprite sheet](https://spritesheetgen.com/gif-to-sprite-sheet/), [sprite sheet maker](https://spritesheetgen.com/sprite-sheet-maker/), [cutter](https://spritesheetgen.com/sprite-sheet-cutter/), [sprite sheet to GIF](https://spritesheetgen.com/sprite-sheet-to-gif/)
+**Product: [spritesheetgen.com](https://spritesheetgen.com/)** · **Docs: [terror668.github.io/spritesheetgen](https://terror668.github.io/spritesheetgen/)**
+
+Free browser tools: [video to sprite sheet](https://spritesheetgen.com/video-to-sprite-sheet/), [GIF to sprite sheet](https://spritesheetgen.com/gif-to-sprite-sheet/), [sprite sheet maker](https://spritesheetgen.com/sprite-sheet-maker/), [cutter](https://spritesheetgen.com/sprite-sheet-cutter/), [sprite sheet to GIF](https://spritesheetgen.com/sprite-sheet-to-gif/)
 
 <p align="center">
   <img src="docs/media/knight-walk.webp" alt="Little knight walk cycle" height="160">
@@ -12,8 +16,6 @@ Website: **[spritesheetgen.com](https://spritesheetgen.com/)** · Free browser t
   <img src="docs/media/dragon-walk.webp" alt="Baby dragon walk cycle" height="160">
   <img src="docs/media/mech-walk.webp" alt="Combat mech walk cycle" height="160">
 </p>
-
-**Docs: [terror668.github.io/spritesheetgen](https://terror668.github.io/spritesheetgen/)**
 
 ## Quick start with an AI agent
 
