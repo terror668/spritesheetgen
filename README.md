@@ -119,8 +119,26 @@ this.anims.create({ key: "walk", frames: this.anims.generateFrameNames("knight",
 
 Godot 4: put `sheet.png` and `animation.tres` in the same folder, then drag `animation.tres` onto an `AnimatedSprite2D`'s **Sprite Frames**.
 
+## Source code
+
+`src/` is the source of the `@spritesheetgen/cli` package on npm: the command line, the MCP server and the sprite pipeline that packs sheets on your machine (background removal, edge cleanup, frame alignment, pixel-art mode, PNG/JSON/Godot export). Generation runs on spritesheetgen.com; this code calls its API with your key.
+
+```sh
+npm ci
+npm test          # unit tests, no network
+npm run build     # dist/index.js, one self-contained file
+node dist/index.js mcp
+```
+
+A `Dockerfile` runs the MCP server over stdio. Mount your project at `/work`, where exports are written:
+
+```sh
+docker build -t spritesheetgen .
+docker run -i --rm -e SPRITESHEETGEN_API_KEY -v "$PWD:/work" --user "$(id -u):$(id -g)" spritesheetgen
+```
+
 ## About this repository
 
-This repository holds the documentation, configuration examples and sample output for the `@spritesheetgen/cli` package on npm. Questions and bug reports are welcome in [issues](../../issues) or at support@spritesheetgen.com.
+The code here is copied from our main codebase at each release, so pull requests are read and applied there by hand. Questions and bug reports are welcome in [issues](../../issues) or at support@spritesheetgen.com.
 
-The contents of this repository are released under the [MIT license](LICENSE).
+Released under the [MIT license](LICENSE).

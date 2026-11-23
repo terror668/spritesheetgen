@@ -119,8 +119,26 @@ this.anims.create({ key: "walk", frames: this.anims.generateFrameNames("knight",
 
 Godot 4: `sheet.png`와 `animation.tres`를 같은 폴더에 두고, `animation.tres`를 `AnimatedSprite2D`의 **Sprite Frames**로 끌어다 놓으세요.
 
+## 소스 코드
+
+`src/`는 npm 패키지 `@spritesheetgen/cli`의 소스입니다: CLI, MCP 서버, 그리고 내 컴퓨터에서 시트를 만드는 처리 과정(배경 제거, 가장자리 정리, 프레임 정렬, 픽셀 아트, PNG/JSON/Godot 내보내기). 생성은 spritesheetgen.com에서 이루어지고, 이 코드는 내 키로 그 API를 호출합니다.
+
+```sh
+npm ci
+npm test          # 단위 테스트, 네트워크 불필요
+npm run build     # dist/index.js, 하나의 독립 실행 파일
+node dist/index.js mcp
+```
+
+`Dockerfile`은 MCP 서버를 stdio로 실행합니다. 내보낸 파일이 저장되는 `/work`에 프로젝트 폴더를 마운트하세요:
+
+```sh
+docker build -t spritesheetgen .
+docker run -i --rm -e SPRITESHEETGEN_API_KEY -v "$PWD:/work" --user "$(id -u):$(id -g)" spritesheetgen
+```
+
 ## 이 저장소에 대해
 
-npm 패키지 `@spritesheetgen/cli`의 문서, 설정 예시, 내보내기 예시를 담고 있습니다. 질문과 버그는 [issues](../../issues) 또는 support@spritesheetgen.com으로 보내 주세요.
+이곳의 코드는 릴리스마다 메인 코드베이스에서 복사해 오므로, 풀 리퀘스트는 검토한 뒤 메인 쪽에 직접 반영합니다. 질문과 버그는 [issues](../../issues) 또는 support@spritesheetgen.com으로 보내 주세요.
 
-이 저장소의 내용은 [MIT 라이선스](LICENSE)로 공개합니다.
+[MIT 라이선스](LICENSE)로 공개합니다.

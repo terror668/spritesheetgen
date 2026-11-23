@@ -119,8 +119,26 @@ this.anims.create({ key: "walk", frames: this.anims.generateFrameNames("knight",
 
 Godot 4：把 `sheet.png` 和 `animation.tres` 放在同一个文件夹，再把 `animation.tres` 拖到 `AnimatedSprite2D` 的 **Sprite Frames** 上。
 
+## 源代码
+
+`src/` 是 npm 包 `@spritesheetgen/cli` 的源码：命令行、MCP 服务，以及在你电脑上打包精灵图的处理流程（去背景、清理边缘、对齐帧、像素风、导出 PNG/JSON/Godot）。生成在 spritesheetgen.com 上进行，这里的代码用你的密钥调用它的 API。
+
+```sh
+npm ci
+npm test          # 单元测试，不联网
+npm run build     # 生成 dist/index.js，单个自包含文件
+node dist/index.js mcp
+```
+
+`Dockerfile` 用 stdio 运行 MCP 服务。把项目目录挂载到 `/work`，导出的文件会写在那里：
+
+```sh
+docker build -t spritesheetgen .
+docker run -i --rm -e SPRITESHEETGEN_API_KEY -v "$PWD:/work" --user "$(id -u):$(id -g)" spritesheetgen
+```
+
 ## 关于本仓库
 
-本仓库存放 npm 包 `@spritesheetgen/cli` 的文档、配置示例和示例导出。问题和 bug 欢迎提到 [issues](../../issues)，或发邮件到 support@spritesheetgen.com。
+这里的代码在每次发版时从我们的主代码库复制过来，所以 pull request 会由我们阅读后手动合入主库。问题和 bug 欢迎提到 [issues](../../issues)，或发邮件到 support@spritesheetgen.com。
 
-本仓库内容采用 [MIT 许可](LICENSE)。
+采用 [MIT 许可](LICENSE)。

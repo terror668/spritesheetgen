@@ -1,0 +1,57 @@
+{
+  "name": "@spritesheetgen/cli",
+  "version": "0.3.0",
+  "mcpName": "io.github.terror668/spritesheetgen",
+  "description": "Generate characters and animations, then export sprite sheets locally.",
+  "homepage": "https://terror668.github.io/spritesheetgen/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terror668/spritesheetgen.git"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "sprite-sheet",
+    "spritesheet",
+    "gamedev",
+    "godot",
+    "phaser",
+    "pixel-art",
+    "ai"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "spritesheetgen": "dist/index.js"
+  },
+  "exports": "./dist/index.js",
+  "files": [
+    "dist/index.js",
+    "README.md",
+    "NOTICE",
+    "skill"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@types/node": "24.19.2",
+    "@types/pngjs": "6.0.5",
+    "esbuild": "0.27.0",
+    "fflate": "0.8.3",
+    "gifenc": "1.0.3",
+    "pngjs": "5.0.0",
+    "typescript": "6.0.3",
+    "vitest": "^5.0.5",
+    "zod": "4.6.7"
+  },
+  "license": "MIT"
+}

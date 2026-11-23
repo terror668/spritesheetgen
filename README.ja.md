@@ -119,8 +119,26 @@ this.anims.create({ key: "walk", frames: this.anims.generateFrameNames("knight",
 
 Godot 4：`sheet.png` と `animation.tres` を同じフォルダに置き、`animation.tres` を `AnimatedSprite2D` の **Sprite Frames** にドラッグします。
 
+## ソースコード
+
+`src/` は npm パッケージ `@spritesheetgen/cli` のソースです：CLI、MCP サーバー、そしてお使いのマシンでシートを組み立てる処理（背景除去、エッジ処理、フレーム位置合わせ、ピクセルアート、PNG/JSON/Godot 書き出し）。生成は spritesheetgen.com で行われ、このコードはあなたのキーでその API を呼び出します。
+
+```sh
+npm ci
+npm test          # 単体テスト（ネットワーク不要）
+npm run build     # dist/index.js（単一の自己完結ファイル）
+node dist/index.js mcp
+```
+
+`Dockerfile` は MCP サーバーを stdio で動かします。書き出し先の `/work` にプロジェクトをマウントしてください：
+
+```sh
+docker build -t spritesheetgen .
+docker run -i --rm -e SPRITESHEETGEN_API_KEY -v "$PWD:/work" --user "$(id -u):$(id -g)" spritesheetgen
+```
+
 ## このリポジトリについて
 
-npm パッケージ `@spritesheetgen/cli` のドキュメント、設定例、書き出しサンプルを置いています。質問や不具合は [issues](../../issues) か support@spritesheetgen.com へどうぞ。
+ここのコードはリリースごとにメインのコードベースからコピーしているため、プルリクエストは内容を確認したうえでメイン側に手で取り込みます。質問や不具合は [issues](../../issues) か support@spritesheetgen.com へどうぞ。
 
-このリポジトリの内容は [MIT ライセンス](LICENSE)で公開しています。
+[MIT ライセンス](LICENSE)で公開しています。
