@@ -16,7 +16,7 @@ import { z } from "zod";
 import { ApiError, createClient } from "./api";
 import { exportFile, exportGeneration, type ExportOptions } from "./export";
 
-const VERSION = "0.3.0";
+const VERSION = "0.3.1";
 const ACTIONS = ["walk", "run", "idle", "attack", "jump"] as const;
 /** One MCP call should not hold the agent for long; longer waits poll again with get_generation. */
 const MAX_WAIT_SECONDS = 120;

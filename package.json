@@ -1,9 +1,9 @@
 {
   "name": "@spritesheetgen/cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "mcpName": "io.github.terror668/spritesheetgen",
   "description": "Generate characters and animations, then export sprite sheets locally.",
-  "homepage": "https://terror668.github.io/spritesheetgen/",
+  "homepage": "https://spritesheetgen.com/game-asset-generator-mcp/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/terror668/spritesheetgen.git"

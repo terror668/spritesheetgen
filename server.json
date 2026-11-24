@@ -3,20 +3,25 @@
   "name": "io.github.terror668/spritesheetgen",
   "title": "SpriteSheetGen",
   "description": "AI sprite sheets for 2D games: generate a character, animate it, export PNG, JSON and Godot files.",
-  "websiteUrl": "https://terror668.github.io/spritesheetgen/",
+  "websiteUrl": "https://spritesheetgen.com/game-asset-generator-mcp/",
   "repository": {
     "url": "https://github.com/terror668/spritesheetgen",
     "source": "github"
   },
-  "version": "0.3.0",
+  "version": "0.3.1",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@spritesheetgen/cli",
-      "version": "0.3.0",
-      "transport": { "type": "stdio" },
+      "version": "0.3.1",
+      "transport": {
+        "type": "stdio"
+      },
       "packageArguments": [
-        { "type": "positional", "value": "mcp" }
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
       ],
       "environmentVariables": [
         {
